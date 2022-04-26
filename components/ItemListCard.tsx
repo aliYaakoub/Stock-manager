@@ -20,7 +20,7 @@ const ItemListCard: React.FC<Props> = ({ data, extended, setExtended }) => {
     <div className='w-full bg-slate-700 rounded shadow-lg p-5 m-2'>
       <div className='flex w-full justify-between items-center'>
           <div className='flex'>
-              <button onClick={()=>setExtended(old => old === data.id ? '' : data.id)}>
+              <button className={`${extended === data.id ? 'rotate-180 transition-transform' : 'transition-transform'}`} onClick={()=>setExtended(old => old === data.id ? '' : data.id)}>
                 <IoMdArrowDropdown size={30} />
               </button>
               <div className='border-r border-slate-600 py-2 px-4'>

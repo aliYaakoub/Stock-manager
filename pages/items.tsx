@@ -12,7 +12,7 @@ import ItemListCard from '../components/ItemListCard';
 const Items: React.FC = () => {
 
   const { docs, loading } = useFirestore('items');
-  const [viewType, setViewType] = useState<ViewType>(ViewType.LIST);
+  const [viewType, setViewType] = useState<ViewType>(ViewType.GRID);
   const [extended, setExtended] = useState<string>('');
 
   return (
@@ -32,7 +32,7 @@ const Items: React.FC = () => {
               <div className='flex items-center justify-between px-2 py-2'>
                 <p className='text-lg pb-2'>Search Result : {docs.length}</p>
                 <div className='flex items-center'>
-                  <button onClick={()=>setViewType(ViewType.LIST)}>
+                  <button className='hidden md:block' onClick={()=>setViewType(ViewType.LIST)}>
                     <HiMenu style={viewType === ViewType.LIST ? {background: '#ffffff80', padding: 5, borderRadius: 5} : {padding: 5}} size={40} />
                   </button>
                   <button onClick={()=>setViewType(ViewType.GRID)}>
