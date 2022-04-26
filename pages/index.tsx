@@ -12,7 +12,7 @@ const Home: NextPage = () => {
   const [searchId, setSearchId] = useState('');
 
   function handleClick(){
-    router.push(`/item-details/${searchId}`)
+    router.push(`/item-details/${searchId.trim()}`)
   }
 
   return (

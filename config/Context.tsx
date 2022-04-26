@@ -37,11 +37,11 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
   async function addItem(itemId: string, brand: string, type: string, color: string, description: string){
     const collectionRef = collection(projectFireStore, 'items');
     return addDoc(collectionRef, {
-      itemId, 
-      brand, 
-      type, 
-      color, 
-      description,
+      itemId: itemId.trim(), 
+      brand: brand.trim(), 
+      type: type.trim(), 
+      color: color.trim(), 
+      description: description.trim(),
       timeStamp: Timestamp.now(), 
     })
   }
@@ -52,11 +52,11 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
 
   async function updateItem(itemId: string, brand: string, type: string, color: string, description: string, id: string){
     return updateDoc(doc(projectFireStore, 'items', id),{
-      itemId, 
-      brand, 
-      type, 
-      color, 
-      description,
+      itemId: itemId.trim(), 
+      brand: brand.trim(), 
+      type: type.trim(), 
+      color: color.trim(), 
+      description: description.trim(),
       timeStamp: Timestamp.now(), 
     })
   }
