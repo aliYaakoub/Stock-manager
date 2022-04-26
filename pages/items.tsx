@@ -1,13 +1,19 @@
 import Head from 'next/head';
-import React from 'react';
+import React, { useState } from 'react';
 import LoadingAnimation from '../components/LoadingAnimation';
 import NavBar from '../components/nav';
 import useFirestore from '../hooks/useFirestore';
 import ItemCard from './../components/ItemCard';
+import { HiMenu } from 'react-icons/hi';
+import { IoGridOutline } from 'react-icons/io5';
+import { ViewType } from '../types';
+import ItemListCard from '../components/ItemListCard';
 
 const Items: React.FC = () => {
 
   const { docs, loading } = useFirestore('items');
+  const [viewType, setViewType] = useState<ViewType>(ViewType.LIST);
+  const [extended, setExtended] = useState<string>('');
 
   return (
     <>
@@ -17,17 +23,28 @@ const Items: React.FC = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <NavBar />
-      <div className='min-h-[calc(100vh-5rem)] bg-slate-600 flex items-center justify-center flex-col text-white'>
+      <div className='min-h-[calc(100vh-5rem)] bg-slate-600 flex items-center w-full flex-col text-white'>
         {loading ?
           <LoadingAnimation />
           : 
           docs.length > 0 ?
-            <div className='py-5'>
-              <p className='text-center text-lg pb-2'>Search Result : {docs.length}</p>
+            <div className='py-5 px-10 w-full'>
+              <div className='flex items-center justify-between px-2 py-2'>
+                <p className='text-lg pb-2'>Search Result : {docs.length}</p>
+                <div className='flex items-center'>
+                  <button onClick={()=>setViewType(ViewType.LIST)}>
+                    <HiMenu style={viewType === ViewType.LIST ? {background: '#ffffff80', padding: 5, borderRadius: 5} : {padding: 5}} size={40} />
+                  </button>
+                  <button onClick={()=>setViewType(ViewType.GRID)}>
+                    <IoGridOutline style={viewType === ViewType.GRID ? {background: '#ffffff80', padding: 5, borderRadius: 5} : {padding: 5}} size={40} />
+                  </button>
+                </div>
+              </div>
               <div className='flex flex-wrap items-center justify-center'>
-                {docs.map(doc => (
-                  <ItemCard key={doc.id} data={doc} />
-                ))}
+                {docs.map(doc => {
+                  if (viewType === ViewType.GRID) return <ItemCard key={doc.id} data={doc} />
+                  else return <ItemListCard key={doc.id} data={doc} extended={extended} setExtended={setExtended} />
+                })}
               </div>
             </div>
             :

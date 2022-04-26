@@ -6,3 +6,8 @@ export type ItemType = {
   color: string; 
   description: string;
 }
+
+export enum ViewType {
+  GRID,
+  LIST,
+}
