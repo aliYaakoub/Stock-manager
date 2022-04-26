@@ -21,6 +21,7 @@ const EditItem: React.FC = () => {
   const [type, setType] = useState('');
   const [description, setDescription] = useState('');
   const [color, setColor] = useState('');
+  const [quantity, setQuantity] = useState('');
 
   useEffect(()=>{
     let res;
@@ -43,12 +44,13 @@ const EditItem: React.FC = () => {
     setType(data.type);
     setDescription(data.description);
     setColor(data.color);
+    setQuantity(data.quantity);
   }, [data]);
 
   async function handleClick(){
     setErr(false);
     try{
-      await updateItem(itemId, brand, type, color, description, data.id);
+      await updateItem(itemId, brand, type, color, description, parseInt(quantity), data.id);
       router.push('/items');
     }
     catch(err){
@@ -87,6 +89,19 @@ const EditItem: React.FC = () => {
                 />
               </div>
               <AppInput label='Color :' placeholder='Color...' value={color} onChange={setColor} />
+              <div className='flex flex-col'>
+                <label htmlFor="quantity" className='my-5 text-lg'>Quantity :</label>
+                <input
+                  min={1}
+                  max={10000}
+                  id='quantity'
+                  type='number'
+                  value={quantity}
+                  placeholder='Quantity...'
+                  onChange={(e)=>setQuantity(e.target.value)}
+                  className='px-2 bg-slate-400 py-2 rounded text-black placeholder:text-slate-600 outline-none w-full resize-none'
+                />
+              </div>
               <AppButton text='Update' disabled={!brand || !type || !description || !color} onClick={handleClick} />
             </div>
         }

@@ -20,25 +20,29 @@ const ItemListCard: React.FC<Props> = ({ data, extended, setExtended }) => {
     <div className='w-full bg-slate-700 rounded shadow-lg p-5 m-2'>
       <div className='flex w-full justify-between items-center'>
           <div className='flex'>
-              <button className={`${extended === data.id ? 'rotate-180 transition-transform' : 'transition-transform'}`} onClick={()=>setExtended(old => old === data.id ? '' : data.id)}>
-                <IoMdArrowDropdown size={30} />
-              </button>
-              <div className='border-r border-slate-600 py-2 px-4'>
-                <p className='text-xs text-slate-400'>Item id: </p>
-                <p>{data.itemId}</p>
-              </div>
-              <div className='border-r border-slate-600 py-2 px-4'>
-                <p className='text-xs text-slate-400'>Item brand: </p>
-                <p>{data.brand}</p>
-              </div>
-              <div className='border-r border-slate-600 py-2 px-4'>
-                <p className='text-xs text-slate-400'>Item type: </p>
-                <p>{data.type}</p>
-              </div>
-              <div className='py-2 px-4'>
-                <p className='text-xs text-slate-400'>Item color: </p>
-                <p>{data.color}</p>
-              </div>
+            <button className={`${extended === data.id ? 'rotate-180 transition-transform' : 'transition-transform'}`} onClick={()=>setExtended(old => old === data.id ? '' : data.id)}>
+              <IoMdArrowDropdown size={30} />
+            </button>
+            <div className='border-r border-slate-600 py-2 px-4'>
+              <p className='text-xs text-slate-400'>Item id: </p>
+              <p>{data.itemId}</p>
+            </div>
+            <div className='border-r border-slate-600 py-2 px-4'>
+              <p className='text-xs text-slate-400'>Item brand: </p>
+              <p>{data.brand}</p>
+            </div>
+            <div className='border-r border-slate-600 py-2 px-4'>
+              <p className='text-xs text-slate-400'>Item type: </p>
+              <p>{data.type}</p>
+            </div>
+            <div className='border-r border-slate-600 py-2 px-4'>
+              <p className='text-xs text-slate-400'>Item color: </p>
+              <p>{data.color}</p>
+            </div>
+            <div className='py-2 px-4'>
+              <p className='text-xs text-slate-400'>Item quantity: </p>
+              <p>{data.quantity && data.quantity.toString()}</p>
+            </div>
           </div>
           <div className='flex items-center justify-end'>
             <Link href={`/edit-item/${data.id}`}><a className='bg-blue-500 hover:bg-blue-400 transition-colors p-2 rounded mx-2'><FiEdit2 size={18} /></a></Link>

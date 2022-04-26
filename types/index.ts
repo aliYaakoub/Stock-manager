@@ -5,6 +5,7 @@ export type ItemType = {
   type: string;
   color: string; 
   description: string;
+  quantity: number;
 }
 
 export enum ViewType {

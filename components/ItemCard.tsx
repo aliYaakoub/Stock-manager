@@ -31,9 +31,13 @@ const ItemCard: React.FC<Props> = ({ data }) => {
         <p className='text-xs text-slate-400'>Item color: </p>
         <p>{data.color}</p>
       </div>
-      <div className='py-4 px-2'>
+      <div className='border-b border-slate-600 py-4 px-2'>
         <p className='text-xs text-slate-400'>Item description: </p>
         <p>{data.description}</p>
+      </div>
+      <div className='py-4 px-2'>
+        <p className='text-xs text-slate-400'>Item quantity: </p>
+        <p>{data.quantity && data.quantity.toString()}</p>
       </div>
       <div className='flex items-center justify-end'>
         <Link href={`/edit-item/${data.id}`}><a className='bg-blue-500 hover:bg-blue-400 transition-colors p-2 rounded mx-2'><FiEdit2 size={18} /></a></Link>

@@ -3,9 +3,9 @@ import React, { useContext, createContext, useState } from 'react';
 import { projectFireStore } from './Firebase';
 
 interface Context {
-  addItem: (itemId: string, brand: string, type: string, color: string, description: string) => Promise<DocumentReference<DocumentData>> | Promise<void>;
+  addItem: (itemId: string, brand: string, type: string, color: string, description: string, quantity: number) => Promise<DocumentReference<DocumentData>> | Promise<void>;
   getItem: (itemId: string) => Promise<DocumentSnapshot<DocumentData>> | Promise<void>;
-  updateItem: (itemId: string, brand: string, type: string, color: string, description: string, id: string) => Promise<void>;
+  updateItem: (itemId: string, brand: string, type: string, color: string, description: string, quantity: number, id: string) => Promise<void>;
   deleteItem: (itemId: string) => Promise<DocumentSnapshot<DocumentData>> | Promise<void>;
   deleteId: string;
   setDeleteId: React.Dispatch<React.SetStateAction<string>>;
@@ -34,7 +34,7 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
 
   const [deleteId, setDeleteId] = useState('');
 
-  async function addItem(itemId: string, brand: string, type: string, color: string, description: string){
+  async function addItem(itemId: string, brand: string, type: string, color: string, description: string, quantity: number){
     const collectionRef = collection(projectFireStore, 'items');
     return addDoc(collectionRef, {
       itemId: itemId.trim(), 
@@ -42,6 +42,7 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
       type: type.trim(), 
       color: color.trim(), 
       description: description.trim(),
+      quantity: quantity,
       timeStamp: Timestamp.now(), 
     })
   }
@@ -50,13 +51,14 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
     return getDoc(doc(projectFireStore, 'items', id));
   }
 
-  async function updateItem(itemId: string, brand: string, type: string, color: string, description: string, id: string){
+  async function updateItem(itemId: string, brand: string, type: string, color: string, description: string, quantity: number, id: string){
     return updateDoc(doc(projectFireStore, 'items', id),{
       itemId: itemId.trim(), 
       brand: brand.trim(), 
       type: type.trim(), 
       color: color.trim(), 
       description: description.trim(),
+      quantity,
       timeStamp: Timestamp.now(), 
     })
   }

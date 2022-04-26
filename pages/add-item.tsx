@@ -12,6 +12,8 @@ const AddItem: React.FC = () => {
   const [type, setType] = useState('');
   const [description, setDescription] = useState('');
   const [color, setColor] = useState('');
+  const [quantity, setQuantity] = useState('');
+
   const { addItem } = useAppContext();
   const [added, setAdded] = useState(false);
   const [err, setErr] = useState(false);
@@ -19,12 +21,13 @@ const AddItem: React.FC = () => {
   async function handleClick(){
     setErr(false);
     try{
-      await addItem(itemId, brand, type, description, color);
+      await addItem(itemId, brand, type, color, description, parseInt(quantity));
       setItemId('');
       setBrand('');
       setType('');
       setDescription('');
       setColor('');
+      setQuantity('');
       setAdded(true);
     }
     catch(err){
@@ -68,6 +71,19 @@ const AddItem: React.FC = () => {
                 />
               </div>
               <AppInput label='Color :' placeholder='Color...' value={color} onChange={setColor} />
+              <div className='flex flex-col'>
+                <label htmlFor="quantity" className='my-5 text-lg'>Quantity :</label>
+                <input
+                  min={1}
+                  max={10000}
+                  id='quantity'
+                  type='number'
+                  value={quantity}
+                  placeholder='Quantity...'
+                  onChange={(e)=>setQuantity(e.target.value)}
+                  className='px-2 bg-slate-400 py-2 rounded text-black placeholder:text-slate-600 outline-none w-full resize-none'
+                />
+              </div>
               <AppButton text='Add' disabled={!itemId || !brand || !type || !description || !color} onClick={handleClick} />
             </div>
         }
