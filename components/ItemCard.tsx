@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ItemType } from '../types';
 import { FiEdit2 } from 'react-icons/fi';
 import { AiOutlineDelete } from 'react-icons/ai';
 import Link from 'next/link';
+import { useAppContext } from './../config/Context';
 
 type Props = {
   data: ItemType;
@@ -10,7 +11,7 @@ type Props = {
 
 const ItemCard: React.FC<Props> = ({ data }) => {
 
-  // const [isDeleting, setIsDeleting] = useState(false);
+  const { setDeleteId } = useAppContext();
 
   return (
     <div className='w-80 bg-slate-700 rounded shadow-lg p-5 m-2'>
@@ -36,7 +37,7 @@ const ItemCard: React.FC<Props> = ({ data }) => {
       </div>
       <div className='flex items-center justify-end'>
         <Link href={`/edit-item/${data.id}`}><a className='bg-blue-500 hover:bg-blue-400 transition-colors p-2 rounded mx-2'><FiEdit2 size={18} /></a></Link>
-        <button className='bg-red-500 hover:bg-red-400 transition-colors p-2 rounded'><AiOutlineDelete size={18} /></button>
+        <button onClick={()=>setDeleteId(data.id)} className='bg-red-500 hover:bg-red-400 transition-colors p-2 rounded'><AiOutlineDelete size={18} /></button>
       </div>
     </div>
   );

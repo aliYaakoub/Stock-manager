@@ -1,5 +1,5 @@
 import { Timestamp, addDoc, collection, getDoc, doc, updateDoc, DocumentReference, DocumentData, DocumentSnapshot, deleteDoc } from 'firebase/firestore';
-import React, { useContext, createContext } from 'react';
+import React, { useContext, createContext, useState } from 'react';
 import { projectFireStore } from './Firebase';
 
 interface Context {
@@ -7,6 +7,8 @@ interface Context {
   getItem: (itemId: string) => Promise<DocumentSnapshot<DocumentData>> | Promise<void>;
   updateItem: (itemId: string, brand: string, type: string, color: string, description: string, id: string) => Promise<void>;
   deleteItem: (itemId: string) => Promise<DocumentSnapshot<DocumentData>> | Promise<void>;
+  deleteId: string;
+  setDeleteId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const defaultState = {
@@ -14,6 +16,8 @@ const defaultState = {
   getItem: async () => {},
   updateItem: async () => {},
   deleteItem: async () => {},
+  deleteId: '',
+  setDeleteId: () => {},
 }
 
 interface Props {
@@ -27,6 +31,8 @@ export const useAppContext = () => {
 }
 
 export const AppContextProvider: React.FC<Props> = ({ children }) => {
+
+  const [deleteId, setDeleteId] = useState('');
 
   async function addItem(itemId: string, brand: string, type: string, color: string, description: string){
     const collectionRef = collection(projectFireStore, 'items');
@@ -64,6 +70,8 @@ export const AppContextProvider: React.FC<Props> = ({ children }) => {
     getItem,
     updateItem,
     deleteItem,
+    deleteId, 
+    setDeleteId,
   }
 
   return (
