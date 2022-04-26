@@ -21,14 +21,17 @@ const Items: React.FC = () => {
         {loading ?
           <LoadingAnimation />
           : 
-          <div className='py-5'>
-            <p className='text-center text-lg pb-2'>Search Result : {docs.length}</p>
-            <div className='flex flex-wrap items-center justify-center'>
-              {docs.map(doc => (
-                <ItemCard key={doc.id} data={doc} />
-              ))}
+          docs.length > 0 ?
+            <div className='py-5'>
+              <p className='text-center text-lg pb-2'>Search Result : {docs.length}</p>
+              <div className='flex flex-wrap items-center justify-center'>
+                {docs.map(doc => (
+                  <ItemCard key={doc.id} data={doc} />
+                ))}
+              </div>
             </div>
-          </div>
+            :
+            <p className='text-center text-lg'>no items found</p>
         }
       </div>
     </>
